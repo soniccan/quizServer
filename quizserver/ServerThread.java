@@ -12,7 +12,7 @@ public class ServerThread extends Thread {
     public ServerThread(Socket socket)
     {
         this.socket = socket;
-        System.out.println("Accept "+socket.getRemoteSocketAddress());
+        System.out.println("Accept " + socket.getRemoteSocketAddress());
     }
 
     public void run()

@@ -12,7 +12,7 @@ public class MulticlientServer{
         Socket socket = null;
         try {
             serverSocket = new ServerSocket(PORT);
-            System.out.println("Server up port="+serverSocket.getLocalPort());
+            System.out.println("Server up port="+ serverSocket.getLocalPort());
             while(true)
             {
                 socket = serverSocket.accept();
