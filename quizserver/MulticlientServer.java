@@ -10,13 +10,15 @@ public class MulticlientServer{
     {
         ServerSocket serverSocket = null;
         Socket socket = null;
+        Rank myrank=null;
         try {
+            myrank = new Rank();
             serverSocket = new ServerSocket(PORT);
             System.out.println("Server up port="+ serverSocket.getLocalPort());
             while(true)
             {
                 socket = serverSocket.accept();
-                new ServerThread(socket).run();
+                new ServerThread(socket,myrank).run();
             }
 
         }catch (IOException e)

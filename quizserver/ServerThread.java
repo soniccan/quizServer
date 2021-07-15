@@ -9,11 +9,14 @@ import java.io.IOException;
 
 public class ServerThread extends Thread {
     private Socket socket;
-
-    public ServerThread(Socket socket)
+    private Rank myrank;
+    public ServerThread(Socket socket,Rank myrank)
     {
+
         this.socket = socket;
+        this.myrank = myrank;
         System.out.println("Accept " + socket.getRemoteSocketAddress());
+        
     }
 
     public void run()
@@ -26,14 +29,14 @@ public class ServerThread extends Thread {
             while((line = in.readLine()) != null)
             {
                 System.out.println(socket.getRemoteSocketAddress() + "受信: " + line);
-                out.println(line);
-                System.out.println(socket.getRemoteSocketAddress() + "送信: " + line);
-                
+                //out.printlnでも２スレッド目に送信できていない。
+                myrank.send(out);
             }
         } catch (IOException e)
         {
             e.printStackTrace();
-        }finally
+        }
+        finally
         {
             try
             {
@@ -46,8 +49,12 @@ public class ServerThread extends Thread {
                 System.out.println("切断されました" + socket.getRemoteSocketAddress());
             }
         }
-
     }
+    // public  void sendRank(PrintWriter out)
+    // {
+    //     this.rank++;
+    //     out.println(this.rank);
+    // }
 
     
 }
