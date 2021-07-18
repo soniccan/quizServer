@@ -3,11 +3,11 @@ server コンパイル
 
 javac quizserver/*.java
 
-java quizserver/MultiClient
+java quizserver/MulticlientServer
 
 
 client
 ----------------------
-javac client/Client.java
+javac client/*.java
 
 java client/Client babashunsukenoMacBook-Air.local
