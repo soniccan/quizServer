@@ -21,8 +21,7 @@ public class MulticlientServer{
                 new ServerThread(socket,myrank).run();
             }
 
-        }catch (IOException e)
-        {
+        }catch (IOException e){
             e.printStackTrace();
         }finally
         {
@@ -41,5 +40,4 @@ public class MulticlientServer{
         }
     }
     
-
 }
