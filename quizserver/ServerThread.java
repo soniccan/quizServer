@@ -10,13 +10,14 @@ import java.io.IOException;
 public class ServerThread extends Thread {
     private Socket socket;
     private Rank myrank;
-    public ServerThread(Socket socket,Rank myrank)
+    private short players;
+    public ServerThread(Socket socket,Rank myrank,short players)
     {
 
         this.socket = socket;
         this.myrank = myrank;
+        this.players = players;
         System.out.println("Accept " + socket.getRemoteSocketAddress());
-        
     }
 
     public void run()
@@ -31,6 +32,9 @@ public class ServerThread extends Thread {
                 System.out.println(socket.getRemoteSocketAddress() + "受信: " + line);
                 //out.printlnでも２スレッド目に送信できていない。
                 myrank.send(out);
+
+
+
             }
         } catch (IOException e)
         {

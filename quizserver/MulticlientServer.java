@@ -1,6 +1,9 @@
 package quizserver;
 
 import java.net.Socket;
+
+import jdk.jfr.Unsigned;
+
 import java.net.ServerSocket;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -9,16 +12,18 @@ import java.io.IOException;
 
 public class MulticlientServer {
 
-    public static final int ECHO_PORT = 1234;
+    public static final int ECHO_PORT = 1235;
 
     public static void main(String args[]) {
         ServerSocket serverSocket = null;
+        Rank rank =new Rank();
+        short players =4;
         try {
             serverSocket = new ServerSocket(ECHO_PORT);
             System.out.println("EchoServerが起動しました(port=" + serverSocket.getLocalPort() + ")");
             while (true) {
                 Socket socket = serverSocket.accept();
-                new EchoThread(socket).start();
+                new EchoThread(socket,rank,players).start();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -37,9 +42,14 @@ public class MulticlientServer {
 class EchoThread extends Thread {
 
     private Socket socket;
-
-    public EchoThread(Socket socket) {
+    private Rank rank;
+    private short btm_rank;
+    private short players;
+    public EchoThread(Socket socket,Rank rank,short btm_rank) {
         this.socket = socket;
+        this.rank =rank;
+        this.btm_rank =btm_rank;
+        this.players =4;
         System.out.println("接続されました " + socket.getRemoteSocketAddress());
     }
 
@@ -50,9 +60,16 @@ class EchoThread extends Thread {
             String line;
             while ((line = in.readLine()) != null) {
                 System.out.println(socket.getRemoteSocketAddress() + " 受信: " + line);
-                out.println(line);
-                System.out.println(socket.getRemoteSocketAddress() + " 送信: " + line);
+                int myrank = rank.send(out);
+                System.out.println(socket.getRemoteSocketAddress() + " 送信: rank is " + myrank);
+                //もし全員回答したら一番早かった人の名前を全員に送る。たい。
+
+                // if( btm_rank == players )
+                // {
+
+                // }
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

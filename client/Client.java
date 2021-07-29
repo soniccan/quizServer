@@ -9,16 +9,15 @@ import java.net.Socket;
   
  public class Client {
   
-  public static final int ECHO_PORT = 1234;
+  public static final int ECHO_PORT = 1235;
  
   public static void main(String args[]) {
     Socket socket = null;
     try {
       socket = new Socket(args[0], ECHO_PORT);
       System.out.println("接続しました"
-                         + socket.getRemoteSocketAddress());
+                        + socket.getRemoteSocketAddress());
       
-     
       BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
       PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
       BufferedReader keyIn = new BufferedReader(new InputStreamReader(System.in));
@@ -48,16 +47,13 @@ import java.net.Socket;
 
           System.out.println("Ans is correct.time is " +res);
           out.println(res);
-          
-          //↑ここまで実行できている。
-
           String line = in.readLine();
           if (line != null) {
             System.out.println("OK");
-            System.out.println("rank is"+line);
+            System.out.println("rank is "+line);
             start_point = System.currentTimeMillis();
           } else {
-            break;
+            System.out.println("FALSE RETRY!");
           }
           
   
