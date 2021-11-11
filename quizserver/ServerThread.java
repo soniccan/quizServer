@@ -13,7 +13,6 @@ public class ServerThread extends Thread {
     private short players;
     public ServerThread(Socket socket,Rank myrank,short players)
     {
-
         this.socket = socket;
         this.myrank = myrank;
         this.players = players;
@@ -22,19 +21,19 @@ public class ServerThread extends Thread {
 
     public void run()
     {
+        
         try{
             BufferedReader in = new BufferedReader(
                 new InputStreamReader(socket.getInputStream()));
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             String line;
+            out.println("今回の参加者は"+players+"人です。");
+            
             while((line = in.readLine()) != null)
             {
                 System.out.println(socket.getRemoteSocketAddress() + "受信: " + line);
                 //out.printlnでも２スレッド目に送信できていない。
                 myrank.send(out);
-
-
-
             }
         } catch (IOException e)
         {
