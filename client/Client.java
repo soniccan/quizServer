@@ -18,18 +18,18 @@ public class Client {
     String input,line;
     start_point = System.currentTimeMillis();
 
-    // while ( (input = keyIn.readLine()).length() > 0 ) {
-      // if(input.equals(sol))
-      {
-        end_point =System.currentTimeMillis();
-        long res = end_point - start_point;
-        System.out.println("Ans is correct.time is " + res);
-        return true;
-      }
-      else{
-        System.out.println("Wrong answer");
-        return false;
-      }
+    // // while ( (input = keyIn.readLine()).length() > 0 ) {
+    //   // if(input.equals(sol))
+    //   {
+    //     end_point =System.currentTimeMillis();
+    //     long res = end_point - start_point;
+    //     System.out.println("Ans is correct.time is " + res);
+    //     return true;
+    //   }
+    //   else{
+    //     System.out.println("Wrong answer");
+    //     return false;
+    //   }
   }
 
   public static void main(String args[]) {
@@ -64,8 +64,6 @@ public class Client {
         System.out.println("wrong answer");
       }
 
-
-      
       } catch (IOException e) {
       e.printStackTrace();
     } finally {
