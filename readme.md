@@ -11,3 +11,7 @@ client
 javac client/*.java
 
 java client/Client babashunsukenoMacBook-Air.local
+
+
+ // プロトコルをIPAddress + "#" + "Message"とする。
+

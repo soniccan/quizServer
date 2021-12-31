@@ -1,77 +1,44 @@
-
 package client;
-import java.net.DatagramPacket;
-import java.net.InetSocketAddress;
-import java.net.SocketAddress;
-import java.nio.ByteBuffer;
-import java.nio.channels.DatagramChannel;
-import java.nio.channels.SelectionKey;
-import java.nio.channels.Selector;
-import java.nio.charset.Charset;
-import java.util.Iterator;
-
-
-
- public class Client {
-
-    public static void main(String[] args) {
-         DatagramChannel datagramChannel = null;
-        try {
-            datagramChannel = DatagramChannel.open();
-            InetSocketAddress inetSocketAddress = new InetSocketAddress(10007);
-            // datagramChannel.socket().bind(inetSocketAddress);
-
-            System.out.println("OK bind");
-            System.out.println(inetSocketAddress.getHostName());
-            datagramChannel.configureBlocking(false);
-            Selector selector = Selector.open();
-
-            datagramChannel.register(selector, SelectionKey.OP_READ);
-            new WriteThread(datagramChannel,inetSocketAddress).start();
-
-             while (selector.select() > 0) {
-                 for (Iterator iterator 
-                      = selector.selectedKeys().iterator();
-                                       iterator.hasNext();) {
-                     SelectionKey selectionKey = (SelectionKey)iterator.next();
-                     iterator.remove();
-                     if (selectionKey.isReadable()) {
-                         doReceive(selectionKey);
-                     }
-
-                    //  if (selectionKey.isWritable()) {
-                    //     doWrite(selectionKey);
-                    // }
-                 }
-             }
-         } catch (Exception e) {
-             e.printStackTrace();
-         } finally {
-             try {
-                 datagramChannel.close();
-             } catch (Exception e) {}
-         }
-
-
-     }
-
-
-     private static void doReceive(SelectionKey selectionKey) {
-         DatagramChannel datagramChannel 
-                     = (DatagramChannel) selectionKey.channel();
-         ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
-         Charset charset = Charset.forName("Shift-JIS");
-         try {
-             datagramChannel.receive(byteBuffer);
-             byteBuffer.flip();
-             System.out.println(charset.decode(byteBuffer));
-         } catch (Exception e) {
-             e.printStackTrace();
-         }
-     }
-
-
-     private static void doWrite(SelectionKey selectionKey) {
+import java.net.Socket;
+import java.net.ServerSocket;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.io.IOException;
+  
+public class Client {
+  
+    public static final int ECHO_PORT = 10007;
+ 
+    public static void main(String args[]) {
+    Socket socket = null;
+    try {
+        socket = new Socket(args[0], ECHO_PORT);
+        System.out.println("接続しました"
+                            + socket.getRemoteSocketAddress());
         
+        new ReadThread(socket).start();
+        // これは使えないnew WriteThread(socket).start();
+        // BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+        BufferedReader keyIn = new BufferedReader(new InputStreamReader(System.in));
+        String input;
+
+        while ( (input = keyIn.readLine()).length() > 0 ) {
+            
+            out.println(socket.getRemoteSocketAddress()+ "#" +input);
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+        } finally {
+        try {
+            if (socket != null) {
+            socket.close();
+            }
+        } catch (IOException e) {}
+        System.out.println("切断されました "
+                            + socket.getRemoteSocketAddress());
+        }
     }
- }
+ 
+}
