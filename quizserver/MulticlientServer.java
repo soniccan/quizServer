@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class MulticlientServer {
   
-  public static final int ECHO_PORT = 10007;
+public static final int ECHO_PORT = 10007;
  
 public static void main(String args[]) {
         ServerSocket serverSocket = null;
@@ -48,14 +48,17 @@ class EchoThread extends Thread {
         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
         String line;
-        String [] messageParsed = new String[2];
+        String messageParsed;
+
+        
+
         while ( (line = in.readLine()) != null ) {
                 System.out.println(socket.getRemoteSocketAddress()
                                 + " 受信: " + line);
                 messageParsed = ParseReceiveMessage.Parse(line);
- 
-                System.out.println(" 送信: ipadd ress is " + messageParsed[0] + " \n message is" + messageParsed[1]);
-                out.println(line);
+                System.out.println("send :" + messageParsed );
+                // out.println(line);
+
         }
     } catch (IOException e) {
         e.printStackTrace();

@@ -5,12 +5,12 @@ package quizserver;
 class ParseReceiveMessage
 {
 
-    public static String[] Parse(String line) {
+    public static String Parse(String line) {
         // プロトコルをIPAddress + "#" + "Message"とする。
         
 
 
-        String ipAddress = line.substring(0,48);
+        String ipAddress = line.substring(0,49);
         String message = line.substring(50,line.length());
         StringBuilder sb = new StringBuilder();
 
@@ -21,12 +21,13 @@ class ParseReceiveMessage
         System.out.println(ipAddress);
         System.out.println(message);
         
-        String[] parsed = new String[2];
+        
 
-        parsed[0] = ipAddress;
-        parsed[1] = message;
+        return "";
+    }
 
-        return parsed;
+    public static Object Response(String[] messageParsed) {
+        return null;
     }
     
 }
