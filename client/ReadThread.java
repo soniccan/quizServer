@@ -12,9 +12,6 @@ public class ReadThread extends Thread {
     public ReadThread(Socket socket)
     {
         this.socket = socket;
-       
-       
-
     }
     public void run()
     {
@@ -22,7 +19,6 @@ public class ReadThread extends Thread {
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             String line;
-            
             while (( line = in.readLine()) != null ){
                 System.out.println(line);
 

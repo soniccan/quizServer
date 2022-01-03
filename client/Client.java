@@ -1,5 +1,6 @@
 package client;
 import java.net.Socket;
+import java.util.UUID;
 import java.net.ServerSocket;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -13,6 +14,7 @@ public class Client {
     public static void main(String args[]) {
     Socket socket = null;
     try {
+
         socket = new Socket(args[0], ECHO_PORT);
         System.out.println("接続しました"
                             + socket.getRemoteSocketAddress());
@@ -20,13 +22,16 @@ public class Client {
         new ReadThread(socket).start();
         // これは使えないnew WriteThread(socket).start();
         // BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        
+        String id = UUID.randomUUID().toString();
+
         PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
         BufferedReader keyIn = new BufferedReader(new InputStreamReader(System.in));
         String input;
 
         while ( (input = keyIn.readLine()).length() > 0 ) {
+            out.println(id + "#" +input);
             
-            out.println(socket.getRemoteSocketAddress()+ "#" +input);
         }
     } catch (IOException e) {
         e.printStackTrace();
