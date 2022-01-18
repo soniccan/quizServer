@@ -7,17 +7,17 @@ import java.io.PrintWriter;
 import java.io.IOException;
 
 public class MulticlientServer {
-  
+
 public static final int ECHO_PORT = 10007;
- 
+
 public static void main(String args[]) {
 
         ServerSocket serverSocket = null;
-        
+
         try {
             ServerData server_data = new ServerData();
             serverSocket = new ServerSocket(ECHO_PORT);
-            System.out.println("EchoServerが起動しました(port="
+            System.out.println("EchoServerが起動しました" + "(port="
                                 + serverSocket.getLocalPort() + ")");
         while (true) {
             Socket socket = serverSocket.accept();
@@ -33,21 +33,21 @@ public static void main(String args[]) {
         } catch (IOException e) {}
         }
     }
- 
+
 }
- 
+
 class EchoThread extends Thread {
- 
+
     private Socket socket;
     private ServerData server_date;
-    
+
     public EchoThread(Socket socket, ServerData server_data) {
         this.socket = socket;
         this.server_date = server_data;
         System.out.println("接続されました "
                         + socket.getRemoteSocketAddress());
     }
- 
+
     public void run() {
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -76,6 +76,6 @@ class EchoThread extends Thread {
     }
 
 
- 
+
 }
 

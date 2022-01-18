@@ -15,7 +15,7 @@ public class ReadThread extends Thread {
     }
     public void run()
     {
-       
+        System.out.println("What's your name?");
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             String line;
