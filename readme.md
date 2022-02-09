@@ -10,7 +10,8 @@ client
 ----------------------
 javac client/*.java
 
-java client/Client babashunsukenoMacBook-Air.local
+java client/Client [hostname]
+
 
 
  // プロトコルをIPAddress + "#" + "Message"とする。
