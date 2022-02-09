@@ -17,11 +17,11 @@ public static void main(String args[]) {
         try {
             ServerData server_data = new ServerData();
             serverSocket = new ServerSocket(ECHO_PORT);
-            System.out.println("EchoServerが起動しました" + "(port="
+            System.out.println("Serverが起動しました" + "(port="
                                 + serverSocket.getLocalPort() + ")");
         while (true) {
             Socket socket = serverSocket.accept();
-            new EchoThread(socket,server_data).start();
+            new clientThread(socket,server_data).start();
         }
         } catch (IOException e) {
             e.printStackTrace();
@@ -36,12 +36,12 @@ public static void main(String args[]) {
 
 }
 
-class EchoThread extends Thread {
+class clientThread extends Thread {
 
     private Socket socket;
     private ServerData server_date;
 
-    public EchoThread(Socket socket, ServerData server_data) {
+    public clientThread(Socket socket, ServerData server_data) {
         this.socket = socket;
         this.server_date = server_data;
         System.out.println("接続されました "

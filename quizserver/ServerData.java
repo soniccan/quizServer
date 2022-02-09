@@ -24,31 +24,40 @@ public class ServerData {
 
         String id = line.substring(0,36);
         String message = line.substring(37,line.length());
-        Integer quiz_number_now;
+        Integer quizNumberNow;
         String parsedMessage ="";
 
 
 
-        if( (quiz_number_now = this.map.get(id)) == null  )
+        quizNumberNow = this.map.get(id);
+        if( quizNumberNow == null  )
         {
             this.map.put(id,0);
-            quiz_number_now =0;
+            quizNumberNow =0;
             parsedMessage = "You (" + message + ") join game\n";
+            return  "You (" + message + ") join game\n";
         }
-        else if (isCollectAnswer(message,quiz_number_now))
+
+        if(quizNumberNow.equals(2))
+        {
+            return "You WIN!!!!!";
+        }
+
+        if(isCollectAnswer(message,quizNumberNow))
         {
 
-            quiz_number_now = this.map.get(id);
-            this.map.put(id,++quiz_number_now);
+            quizNumberNow = this.map.get(id);
+            this.map.put(id,++quizNumberNow);
 
-            parsedMessage = "You answer is collect next quiz number is (" + quiz_number_now + ")  \n";
+            parsedMessage = "You answer is collect next quiz number is (" + quizNumberNow + ")  \n";
         }
         else {
-            parsedMessage = "You answer is not collect next quiz number is (" + quiz_number_now + ")  \n";
+            parsedMessage = "You answer is not collect next quiz number is (" + quizNumberNow + ")  \n";
         }
 
+        parsedMessage = parsedMessage + quizStatement[quizNumberNow] + "\n";
 
-        parsedMessage = parsedMessage + quizStatement[quiz_number_now] + "\n";
+
 
         return parsedMessage;
 
@@ -57,17 +66,8 @@ public class ServerData {
 
 
 
-    private boolean isCollectAnswer(String message, Integer quiz_number_now) {
-        return ans[quiz_number_now].equals(message);
+    private boolean isCollectAnswer(String message, Integer quizNumberNow) {
+        return ans[quizNumberNow].equals(message);
     }
-
-
-
-
-
-
-
-
-
 
 }

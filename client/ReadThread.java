@@ -24,17 +24,15 @@ public class ReadThread extends Thread {
 
             }
 
-
-
         } catch (IOException e) {
             e.printStackTrace();
-            } finally {
+        } finally {
             try {
                 if (socket != null) {
-                socket.close();
+                    socket.close();
                 }
             } catch (IOException e) {}
-            System.out.println("aaaaa "
+                System.out.println("Disconnected "
                                 + socket.getRemoteSocketAddress());
             }
         }
